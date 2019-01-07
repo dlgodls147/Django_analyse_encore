@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+{% block header %}
+Home
+{% endblock %}
+
+{% block content %}
+
+
+
+            <div class="card">
+                <div class="card-block">
+    <span id="more2" style="CURSOR: hand" onclick="if(story.style.display=='none') {story.style.display='';more2.innerText='>접기'} 
+    else {story.style.display='none';more2.innerText='>전체 데이터'}">
+        <h2>전체데이터 보기 ></h2></span>
+            <div id="story" style="display: none">
+                <HR>
+                <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th><b>날짜</b></th>
+            <th><b>설비용량(MW)</b></th>
+            <th><b>공급능력(MW)</b></th>
+            <th><b>최대전력(MW)</b></th>
+            <th><b>공급예비력(MW)</b></th>
+            <th><b>공급예비율(%)</b></th>
+            <th><b>최대전력기준일시</b></th>
+            <th><b>평균기온(℃)</b></th>
+            <th><b>평균최고기온(℃)</b></th>
+            <th><b>최저기온(℃)</b></th>
+            <th><b>최고기온(℃)</b></th>
+            <th><b>평균최저기온(℃)</b></th>
+        </tr>
+                </thead>
+        {% for t in testtable %}
+    <tr>
+        <td>{{t.date}}</td>
+        <td>{{t.arrangements}}</td>
+        <td>{{t.supply}}</td>
+        <td>{{t.max_power}}</td>
+        <td>{{t.reserve_power}}</td>
+        <td>{{t.reserve_per}}</td>
+        <td>{{t.basic_date}}</td>
+        <td>{{t.avg_tem}}</td>
+        <td>{{t.avg_max_tem}}</td>
+        <td>{{t.min_tem}}</td>
+        <td>{{t.max_tem}}</td>
+        <td>{{t.avg_min_tem}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<HR>
+</div>
+</div>
+</div>
+
+{% endblock %}

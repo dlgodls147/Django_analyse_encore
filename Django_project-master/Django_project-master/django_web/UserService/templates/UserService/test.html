@@ -1,0 +1,107 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/cylinder.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script type="text/javascript">
+      $.getJSON("../chartjson1", function(jsondata) {
+        $.each(jsondata, function(key, value){
+        Highcharts.chart('container', {
+    
+    title: {
+      text: '2008-2018년의 최대기온과 최소기온의 차이 비교'
+    },
+    
+    xAxis: {
+        categories: ['2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'],
+        labels: {
+            staggerLines: 2
+        }
+    },
+    
+    yAxis: {
+      title: {
+        text: '온도(°C)'
+      }
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle'
+    },
+    
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false
+        },
+        pointStart: 2008
+      }
+    },
+    
+    series: [{
+      name: '최고온도',
+      data: jsondata.max_tem
+    }, {
+      name: '최저온도',
+      data: jsondata.min_tem
+    }],
+    
+    responsive: {
+      rules: [{
+        condition: {
+    
+        },
+        chartOptions: {
+          legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            borderWidth: 0
+          }
+        }
+      }]
+    }
+    
+    });
+            });
+      });
+
+
+      $.getJSON("../chartjson2", function(jsondata) {
+        $.each(jsondata, function(key, value){
+          Highcharts.chart('container2', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: '1월과 6월의 기온 변화 차트'
+  },
+  xAxis: {
+  },
+  credits: {
+    enabled: false
+  },
+  series: [{
+        name: 'jan',
+        data: jsondata.jan
+    },{
+    
+    name: 'jun',
+    data: jsondata.jun
+  }]
+});
+    });
+      });
+
+    </script>
+
+          <div id='container'></div>
+          <div id='container2'></div>
+    {% endblock %}  

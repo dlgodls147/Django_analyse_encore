@@ -1,0 +1,120 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+
+        {% if user.is_authenticated %} 
+            <p>{{ user.username }}님 안녕하세요! 로그인 되었습니다.</p> 
+        {% else %} 
+            <p>로그인 해주세요.</p> 
+        {% endif %}
+        
+        <script>
+                function myFunction() {
+                  var x = document.getElementById("myDate").value;
+                  document.getElementById("demo").innerHTML = x;
+                }
+                </script>
+<!--https://www.youtube.com/watch?v=Vo90DntfTMw&list=PLY9pe3iUjRrT6wZTIA5YriQxvfXf-yxhF&index=19-->
+
+    <br>
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                        <div class="col-md-6 col-8 align-self-center">
+                            <h3 class="text-themecolor m-b-0 m-t-0">{% block header %}DashBoard{% endblock %}</h3>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6 col-4 align-self-center">
+                            <a href="#" class="btn pull-right hidden-sm-down btn-danger"> 바로가기 </a>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Bread crumb and right sidebar toggle -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Start Page Content -->
+                    <!-- ============================================================== -->
+                    <!-- Row -->
+                    <div class="row">
+                        <!-- Column -->
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-block">
+                                    <h2 class="card-title">User</h2>
+                                    <a href="{% url 'UserService:login' %}"><button type="button " class="btn btn-success">로그인</button></a>
+                                    <a href="{% url 'UserService:logout' %}"><button type="button" class="btn btn-success">로그아웃</button></a>
+                                    <a href="{% url 'UserService:signup' %}"><button type="button" class="btn btn-success">회원가입</button></a>
+                                    <div class="text-right">
+                                        <br><h4 class="font-light m-b-0"><i class="ti-arrow-right text-success"></i> 로그인 바로가기</h4>
+                                        <span class="text-muted"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <!-- Column -->
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-block">
+                                    <h2 class="card-title">Data</h2>
+                                    <a href="{% url 'UserService:visual' %}"><button type="button" class="btn btn-success">차트</button></a>
+                                    <a href="{% url 'UserService:result' %}"><button type="button" class="btn btn-success">테이블</button></a>
+                                    <a href="{% url 'UserService:test' %}"><button type="button" class="btn btn-success">차트2</button></a>
+                                    <a href="{% url 'visual:list' %}"><button type="button" class="btn btn-success">게시판</button></a>
+                                    <div class="text-right">
+                                        <br><h4 class="font-light m-b-0"><i class="ti-arrow-right text-info"></i>기온/전력 비교 결과</h4>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                    </div>
+                    <!-- Row -->
+                    
+                    <div class="card">
+                            <div class="card-block">
+                      <span id="more1" style="CURSOR: hand" onclick="if(story.style.display=='none') {story.style.display='';more1.innerText='>접기'} 
+                      else {story.style.display='none';more1.innerText='>2018년 데이터'}">
+                        <h2>2018년 데이터 보기 ></h2></span>
+                        <div id="story" style="display: none">
+                          <HR>
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                            <th><b>날짜</b></th>
+                                            <th><b>최대전력(MW)</b></th>
+                                            <th><b>최고기온(℃)</b></th>
+                                            <th><b>최저기온(℃)</b></th>
+                                        </tr>
+                                        </thead>
+                          {% for t in info %}
+                          <tr>
+                              <td>{{t.date}}</td>
+                              <td>{{t.max_power}}</td>
+                              <td>{{t.max_tem}}</td>
+                              <td>{{t.min_tem}}</td>
+                          </tr>
+                          {% endfor %}
+                        </table>
+                            <HR>
+                      </div>
+                      </div>
+                      </div>
+                    <!-- Row -->
+
+                    <!-- Row -->
+                    <!-- ============================================================== -->
+                    <!-- End PAge Content -->
+                    <!-- ============================================================== -->
+                
+        
+{% endblock %}

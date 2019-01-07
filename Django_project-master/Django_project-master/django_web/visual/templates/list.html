@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Index
+{% endblock %}
+
+{% block header %}
+Index
+{% endblock %}
+
+{% block content %}
+    
+    <h2> 게시판</h2>
+    <form method="post">
+        {% csrf_token%}
+        <select name="search_option">
+            {%if search_option == "writer" %}
+            <option value="writer" selected>이름</option>
+            <option value="title" >제목</option>
+            <option value="content">내용</option>
+            <option value="all">이름+제목+내용</option>
+            {% elif search_option == "title" %}
+            <option value="writer">이름</option>
+            <option value="title" selected>제목</option>
+            <option value="content">내용</option>
+            <option value="all">이름+제목+내용</option>
+            {% elif search_option == "content" %}
+            <option value="writer">이름</option>
+            <option value="title">제목</option>
+            <option value="content" selected>내용</option>
+            <option value="all">이름+제목+내용</option>
+            {%else%}
+            <option value="writer">이름</option>
+            <option value="title" >제목</option>
+            <option value="content">내용</option>
+            <option value="all" selected>이름+제목+내용</option>
+            {% endif %}
+        </select>
+        <input name="serach" value="{{search}}">
+        <input type="submit" value="검색">
+    </form><hr>
+    <div class="row">
+        <div class="col-sm-3">
+            <p><a href="write">글쓰기</a></p>
+        </div>
+        <div class="col-sm-3">
+            <p class="p-l-0">게시물수 : {{boardCount}}</p>
+        </div>
+        
+    </div>
+    
+    
+        <!--페이지 찾기-->
+        <div class="center">
+            <table class= "table">
+            <tr>
+                <td colspan="7" align="center">
+                {% if start_page >= page_list_size %}
+                    <a href="?search_option={{search_option}}&search={{search}}&start={{prev_list}}"></a>
+                {%endif%}
+                <!--페이지 리스트 출력-->
+                {% autoescape off%}
+                {%for link in links%}
+                        {{link}}
+                {%endfor%}
+                {%endautoescape%}
+                <!--다음페이지 리스트 출력-->
+                {%if total_page > end_page%}
+                    <a href="?search_option={{search_option}}&search={{search}}&start={{next_list}}"></a>
+                {%endif%}
+                    </td>
+            </tr>
+        </table>
+        </div>
+        
+    
+    <h2> 게시판</h2>
+
+    <!-- Row -->
+    <div class="row">
+            <!-- Column -->
+            {%for row in boardList%}
+            <div class="col-lg-4 darker">
+                <a href="detail?search_option={{search_option}}&search={{search}}&idx={{row.idx}}" style="text-decoration:none; color:black">
+                <div class="card" >
+                    <img class="card-img-top img-responsive" src="{% static '/assets/images/big/img2.jpg' %}" alt="Card">
+                    <div class="card-block" >
+                        <ul class="list-inline font-14">
+
+                            <li class="p-l-0"><b>Number </b>{{row.idx}}</li>
+                            <li class="p-l-0"><b>Writer  </b>{{row.writer}}</li><br>
+
+                            <li class="p-l-0"><b>{{row.writedate|date:"Y/m/d"}}</b></li>
+                            
+                            <li class="p-l-0"><b>{{row.down}}</b> downs</li>
+                            
+                            <li class="p-l-0"><b>Files </b>
+                                {%if row.filesize > 0 %}
+                                <a href="download?idx={{row.idx}}">
+                                <img src="{% static '/images/file.gif' %}">
+                                </a> 
+                                {%endif%}
+                            </li>
+                        </ul>
+                        <h3 class="font-normal"><a href="detail?search_option={{search_option}}&search={{search}}&idx={{row.idx}}">{{row.title}}</a></h3>
+                        <b>{{row.hit}} views</b>
+                    </div>
+                </div>
+            </a>
+            </div>
+            {% endfor %}
+            <!-- Column -->
+            
+        </div>
+
+
+
+
+    {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block header %}
+Home
+{% endblock %}
+
+{% block content %}
+
+        {% if user.is_authenticated %}
+        <script type="text/javascript">
+            alert('잘못된 접근입니다. \n회원가입을 위해서는 로그아웃이 필요합니다.')
+            window.location.href = '/';
+        </script>
+        {% endif %}
+        
+        <form class="sign-up-form" action="{% url 'UserService:signup' %}" method="POST">
+            {%csrf_token%}
+            <h2 class="sub-title"> 회원가입 </h2>
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-success" value="회원가입">
+        </form>
+        </div>
+{% endblock %}

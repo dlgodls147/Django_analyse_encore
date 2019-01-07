@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block header %}
+Home
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+    <p>이름과 비밀번호가 일치하지 않습니다. 다시 시도해주세요.</p>
+    {% endif %}
+    
+   <h2>login</h2>
+   <form class="w3-container w3-card-4" action="{% url 'UserService:login' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <p><input id = "{{ form.username.id_for_lable }}" class="form-control" name = "{{form.username.html_name}}"
+                 type="text"  required>
+            <label>ID</label></p>
+
+            <p><input id = "{{ form.password.id_for_lable }}" class="form-control" name = "{{form.password.html_name}}"
+                     type="password"  required>
+            <label>PASSWORD</label></p>
+
+        </table>
+        <input type="submit" class="btn btn-primary" value="로그인">
+        <input type="submit" class="btn btn-primary" onclick="location.href='{% url 'UserService:signup' %}'" value="회원가입">
+        <input type="button" class="btn btn-danger" value="취소"
+            onclick="location.href='{% url 'UserService:index' %}'">
+   </form>
+{% endblock %}  
+
